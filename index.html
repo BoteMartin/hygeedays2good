@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devis Hygée Days - Partie 2</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Courier New', monospace;
+            background: #f5f5f5;
+            color: #1a1a1a;
+            overflow: hidden;
+        }
+
+        .slideshow {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 4rem 6rem;
+        }
+
+        @media (max-width: 1024px) {
+            .slide {
+                padding: 3rem 4rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 2rem 2rem;
+                justify-content: flex-start;
+                padding-top: 4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 1.5rem 1.5rem;
+                padding-top: 3rem;
+            }
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        .slide-header {
+            margin-bottom: 3rem;
+        }
+
+        .slide-title {
+            font-size: 4rem;
+            font-weight: 400;
+            letter-spacing: -0.02em;
+            margin-bottom: 0;
+            text-transform: uppercase;
+            border-bottom: 2px solid #1a1a1a;
+            padding-bottom: 1rem;
+        }
+
+        @media (max-width: 1024px) {
+            .slide-title {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide-title {
+                font-size: 2.5rem;
+                padding-bottom: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-title {
+                font-size: 2rem;
+                padding-bottom: 0.5rem;
+            }
+        }
+
+        .slide-subtitle {
+            font-size: 1.1rem;
+            font-weight: 400;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: #666;
+            margin-bottom: 0.5rem;
+        }
+
+        @media (max-width: 768px) {
+            .slide-subtitle {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-subtitle {
+                font-size: 0.9rem;
+            }
+        }
+
+        .slide-content {
+            max-width: 1200px;
+        }
+
+        .info-box {
+            background: white;
+            border: 1px solid #1a1a1a;
+            padding: 2.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-box {
+                padding: 1.5rem;
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-box {
+                padding: 1.25rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 0;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-label {
+                font-size: 0.8rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-label {
+                font-size: 0.75rem;
+            }
+        }
+
+        .info-value {
+            font-size: 1.1rem;
+        }
+
+        @media (max-width: 768px) {
+            .info-value {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .info-value {
+                font-size: 0.85rem;
+            }
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border: 1px solid #1a1a1a;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            table {
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            table {
+                font-size: 0.75rem;
+            }
+        }
+
+        th {
+            background: #1a1a1a;
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            th {
+                padding: 0.75rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            th {
+                padding: 0.5rem;
+                font-size: 0.7rem;
+            }
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 0.95rem;
+        }
+
+        @media (max-width: 768px) {
+            td {
+                padding: 0.75rem;
+                font-size: 0.85rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            td {
+                padding: 0.5rem;
+                font-size: 0.75rem;
+            }
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        .total-row {
+            font-weight: 600;
+            background: #f9f9f9;
+        }
+
+        .final-row {
+            font-weight: 700;
+            font-size: 1.2rem;
+            background: #1a1a1a;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .final-row {
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .final-row {
+                font-size: 1rem;
+            }
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 3rem;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                bottom: 2rem;
+                gap: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navigation {
+                bottom: 1.5rem;
+                gap: 0.5rem;
+            }
+        }
+
+        .nav-btn {
+            width: 3rem;
+            height: 3rem;
+            border: 2px solid #1a1a1a;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .nav-btn {
+                width: 2.5rem;
+                height: 2.5rem;
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-btn {
+                width: 2rem;
+                height: 2rem;
+                font-size: 0.9rem;
+                border: 1.5px solid #1a1a1a;
+            }
+        }
+
+        .nav-btn:hover {
+            background: #1a1a1a;
+            color: white;
+        }
+
+        .nav-btn:active {
+            transform: scale(0.95);
+        }
+
+        .nav-dot {
+            width: 12px;
+            height: 12px;
+            border: 2px solid #1a1a1a;
+            background: transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        @media (max-width: 768px) {
+            .nav-dot {
+                width: 10px;
+                height: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-dot {
+                width: 8px;
+                height: 8px;
+                border: 1.5px solid #1a1a1a;
+            }
+        }
+
+        .nav-dot.active {
+            background: #1a1a1a;
+        }
+
+        .slide-counter {
+            position: fixed;
+            bottom: 3rem;
+            right: 3rem;
+            font-size: 1rem;
+            letter-spacing: 0.1em;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .slide-counter {
+                bottom: 2rem;
+                right: 2rem;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide-counter {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                font-size: 0.8rem;
+            }
+        }
+
+        .context-text {
+            line-height: 1.6;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .context-text {
+                font-size: 0.95rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .context-text {
+                font-size: 0.85rem;
+                line-height: 1.5;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slideshow">
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <div class="slide-content" style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center;">
+                <div>
+                    <h1 class="slide-title" style="border-bottom: none; margin-bottom: 0; font-size: clamp(2.5rem, 8vw, 5rem);">HYGÉE × BOTE</h1>
+                    <div class="slide-subtitle" style="font-size: clamp(1rem, 3vw, 1.5rem); margin-top: 3rem;">Hygée Days 2025 - Partie 2</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: Contexte -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Contexte</h2>
+            </div>
+            <div class="slide-content">
+                <div class="info-box">
+                    <p class="context-text">Production supplémentaire et accompagnement pour la <strong>Partie 2 des Hygée Days 2025</strong>.</p>
+                    <p class="context-text" style="margin-top: 1rem;">Période concernée du 28/11 au 01/12.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: Production -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Production</h2>
+            </div>
+            <div class="slide-content">
+                <p class="context-text" style="margin-bottom: 1.5rem;">Volumes supplémentaires de production pour la Partie 2.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Livrable</th>
+                            <th>Quantité</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>E-mails supplémentaires</td>
+                            <td>12 livrables (flows + newsletters)</td>
+                        </tr>
+                        <tr>
+                            <td>WhatsApp</td>
+                            <td>Compris</td>
+                        </tr>
+                        <tr>
+                            <td>Popups</td>
+                            <td>Compris</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 4: Accompagnement -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Accompagnement</h2>
+                <div class="slide-subtitle">Support intensif</div>
+            </div>
+            <div class="slide-content">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;">
+                    <div>
+                        <h3 style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2.5rem; border-bottom: 2px solid #1a1a1a; padding-bottom: 0.75rem;">Inclus</h3>
+                        
+                        <div style="margin-bottom: 2.5rem;">
+                            <div style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.5rem;">Présence / Réactivité</div>
+                            <div style="font-size: 0.95rem; border-left: 3px solid #1a1a1a; padding-left: 1.25rem; line-height: 1.5;">Disponibilité complète période courte</div>
+                        </div>
+
+                        <div style="margin-bottom: 2.5rem;">
+                            <div style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.5rem;">Coordination</div>
+                            <div style="font-size: 0.95rem; border-left: 3px solid #1a1a1a; padding-left: 1.25rem; line-height: 1.5;">Suivi rapproché 28/11-01/12</div>
+                        </div>
+
+                        <div>
+                            <div style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.5rem;">Livrables supplémentaires</div>
+                            <div style="font-size: 0.95rem; border-left: 3px solid #1a1a1a; padding-left: 1.25rem; line-height: 1.5;">Outils annexes si nécessaire</div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2.5rem; border-bottom: 2px solid #1a1a1a; padding-bottom: 0.75rem;">Tarification</h3>
+                        
+                        <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 3rem; color: #333;">Forfait accompagnement<br>Période 28/11-01/12</p>
+                        
+                        <div style="font-size: 3.5rem; font-weight: 700; letter-spacing: -0.02em; text-decoration: line-through; color: #999;">750€</div>
+                        <div style="font-size: 1.2rem; font-weight: 600; letter-spacing: 0.05em; margin-top: 1rem; color: #2e7d32;">OFFERT</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Principe de tarification -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Principe de tarification</h2>
+                <div class="slide-subtitle">Hygée Days - Partie 2</div>
+            </div>
+            <div class="slide-content">
+                <p class="context-text" style="margin-bottom: 1.5rem;">Le volume du contrat de base a été entièrement consommé par la <strong>Partie 1 des Hygée Days</strong>. L'intégralité de la Partie 2 est donc facturée selon la grille dégressive.</p>
+                
+                <div class="info-box" style="margin-bottom: 1.5rem;">
+                    <div class="info-row">
+                        <span class="info-label">Volume total Partie 2</span>
+                        <span class="info-value">12 e-mails supplémentaires</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Équivalent en unités</span>
+                        <span class="info-value">12 unités</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-label">Contrat de base (restant)</span>
+                        <span class="info-value">0 unité</span>
+                    </div>
+                    <div class="info-row" style="border-bottom: 2px solid #1a1a1a; padding-bottom: 1rem;">
+                        <span class="info-label" style="font-size: 1.05rem;">Volume supplémentaire facturé</span>
+                        <span class="info-value" style="font-size: 1.15rem; font-weight: 700;">12 unités</span>
+                    </div>
+                </div>
+
+                <p class="context-text" style="color: #666; font-size: 0.9rem;">Grille dégressive détaillée slide suivante.</p>
+            </div>
+        </div>
+
+        <!-- Slide 6: Calcul détaillé -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Tarification</h2>
+                <div class="slide-subtitle">Grille dégressive - Partie 2</div>
+            </div>
+            <div class="slide-content">
+                <p class="context-text" style="margin-bottom: 1.5rem;">Application de la grille tarifaire sur 12 unités supplémentaires.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Tranches</th>
+                            <th>Prix unitaire</th>
+                            <th>Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0-10 unités</td>
+                            <td>200€</td>
+                            <td>2 000€</td>
+                        </tr>
+                        <tr>
+                            <td>10-12 unités (2 unités)</td>
+                            <td>150€</td>
+                            <td>300€</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2">Sous-total production</td>
+                            <td>2 300€</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Slide 7: Total final -->
+        <div class="slide">
+            <div class="slide-header">
+                <h2 class="slide-title">Récapitulatif</h2>
+                <div class="slide-subtitle">Hygée Days 2025 - Partie 2</div>
+            </div>
+            <div class="slide-content">
+                <p class="context-text" style="margin-bottom: 1.5rem;">Total projet avec remise partenaire appliquée.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Désignation</th>
+                            <th style="text-align: right; width: 150px;">Quantité</th>
+                            <th style="text-align: right; width: 180px;">Montant HT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Production (E-mails)</td>
+                            <td style="text-align: right;">12 unités</td>
+                            <td style="text-align: right;">2 300,00 €</td>
+                        </tr>
+                        <tr>
+                            <td>Accompagnement stratégique</td>
+                            <td style="text-align: right;">1 forfait</td>
+                            <td style="text-align: right; color: #2e7d32; font-weight: 600;">OFFERT</td>
+                        </tr>
+                        <tr style="height: 0.5rem;">
+                            <td colspan="3" style="border-bottom: none;"></td>
+                        </tr>
+                        <tr class="total-row">
+                            <td colspan="2" style="text-align: right; font-size: 1.05rem;">TOTAL HT</td>
+                            <td style="text-align: right; font-size: 1.05rem;">2 300,00 €</td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" style="text-align: right;">Remise partenaire (15%)</td>
+                            <td style="text-align: right; color: #2e7d32;">- 345,00 €</td>
+                        </tr>
+                        <tr style="height: 0.5rem;">
+                            <td colspan="3" style="border-bottom: 2px solid #1a1a1a;"></td>
+                        </tr>
+                        <tr class="final-row">
+                            <td colspan="2" style="text-align: right; font-size: 1.25rem; letter-spacing: 0.05em;">TOTAL NET HT</td>
+                            <td style="text-align: right; font-size: 1.4rem; white-space: nowrap;">1 955,00 €</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" onclick="prevSlide()">←</button>
+        <div class="nav-dot active" onclick="goToSlide(0)"></div>
+        <div class="nav-dot" onclick="goToSlide(1)"></div>
+        <div class="nav-dot" onclick="goToSlide(2)"></div>
+        <div class="nav-dot" onclick="goToSlide(3)"></div>
+        <div class="nav-dot" onclick="goToSlide(4)"></div>
+        <div class="nav-dot" onclick="goToSlide(5)"></div>
+        <div class="nav-dot" onclick="goToSlide(6)"></div>
+        <button class="nav-btn" onclick="nextSlide()">→</button>
+    </div>
+
+    <div class="slide-counter">
+        <span id="current">01</span> / <span id="total">07</span>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.nav-dot');
+        const totalSlides = slides.length;
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+
+            dots.forEach((dot, index) => {
+                dot.classList.remove('active');
+                if (index === currentSlide) {
+                    dot.classList.add('active');
+                }
+            });
+
+            document.getElementById('current').textContent = 
+                String(currentSlide + 1).padStart(2, '0');
+            document.getElementById('total').textContent = 
+                String(totalSlides).padStart(2, '0');
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % totalSlides;
+            updateSlide();
+        }
+
+        function prevSlide() {
+            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+            updateSlide();
+        }
+
+        function goToSlide(index) {
+            currentSlide = index;
+            updateSlide();
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                prevSlide();
+            } else if (e.key >= '1' && e.key <= '7') {
+                goToSlide(parseInt(e.key) - 1);
+            }
+        });
+
+        // Touch swipe support for mobile
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        document.addEventListener('touchstart', (e) => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', (e) => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) {
+                nextSlide();
+            }
+            if (touchEndX > touchStartX + 50) {
+                prevSlide();
+            }
+        }
+    </script>
+</body>
+</html>
