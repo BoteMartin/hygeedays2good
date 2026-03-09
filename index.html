@@ -156,6 +156,33 @@
             padding:1.1rem 1.5rem;border-top:2px solid var(--gold-border);border-bottom:none;
         }
 
+        /* Recap cards */
+        .recap{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+        .recap-item{
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:var(--r);padding:1.5rem;
+        }
+        .recap-label{font-size:0.9rem;font-weight:600;color:var(--text);margin-bottom:0.25rem}
+        .recap-sub{font-size:0.75rem;color:var(--text-mute);margin-bottom:1rem}
+        .recap-row{display:flex;justify-content:space-between;align-items:center}
+        .recap-qty{font-size:0.8rem;color:var(--text-sec)}
+        .recap-amt{font-size:1.1rem;font-weight:700;color:var(--text)}
+
+        .recap-total{
+            background:var(--gold-dim);border:1px solid var(--gold-border);
+            border-radius:var(--r);padding:1.5rem;
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        .recap-total-label{
+            font-size:0.7rem;font-weight:700;letter-spacing:0.15em;
+            text-transform:uppercase;color:var(--gold);
+        }
+        .recap-total-amt{font-size:1.5rem;font-weight:700;color:var(--gold)}
+
+        @media(max-width:440px){
+            .recap-total-amt{font-size:1.3rem}
+        }
+
         /* Nav */
         .nav{
             position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
@@ -335,26 +362,20 @@
             <div class="slide-inner">
                 <div class="tag rv">Recapitulatif</div>
                 <h2 class="heading rv d1">Total <strong>projet</strong></h2>
-                <table class="tbl rv d2">
-                    <thead>
-                        <tr>
-                            <th>Designation</th>
-                            <th class="r">Quantite</th>
-                            <th class="r">Montant HT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Production supplementaire (E-mails, WhatsApp, Popups)</td>
-                            <td class="r">20 unites</td>
-                            <td class="r b">3 500,00 &#8364;</td>
-                        </tr>
-                        <tr class="rf">
-                            <td colspan="2" style="text-align:right;letter-spacing:.05em">TOTAL HT</td>
-                            <td class="r" style="font-size:1.2rem;white-space:nowrap">3 500,00 &#8364;</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <div class="recap rv d2">
+                    <div class="recap-item">
+                        <div class="recap-label">Production supplementaire</div>
+                        <div class="recap-sub">E-mails, WhatsApp, Popups</div>
+                        <div class="recap-row">
+                            <span class="recap-qty">20 unites</span>
+                            <span class="recap-amt">3 500,00 &#8364;</span>
+                        </div>
+                    </div>
+                    <div class="recap-total">
+                        <span class="recap-total-label">Total HT</span>
+                        <span class="recap-total-amt">3 500,00 &#8364;</span>
+                    </div>
+                </div>
             </div>
         </div>
 
