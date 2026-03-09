@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HYGEE x BOTE — HD26</title>
+    <title>HYGEE / ALTHEE x BOTE — HD26</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
@@ -80,7 +80,7 @@
         /* Title */
         .tc{text-align:center}
         .title-main{
-            font-size:clamp(2.8rem,8vw,5rem);
+            font-size:clamp(2.4rem,7vw,4.5rem);
             font-weight:200;letter-spacing:-0.04em;line-height:1.05;
         }
         .title-main span{font-weight:500}
@@ -102,29 +102,40 @@
         .desc strong{color:var(--text);font-weight:600}
 
         /* Metrics */
-        .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+        .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2rem}
         .mc{
             background:var(--surface);border:1px solid var(--border);
-            border-radius:var(--r);padding:2rem 1.5rem;text-align:center;
+            border-radius:var(--r);padding:1.75rem 1.25rem;text-align:center;
             transition:border-color .3s,transform .3s;
         }
         .mc:hover{border-color:var(--gold-border);transform:translateY(-3px)}
-        .mc-n{font-size:2.75rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:.6rem}
+        .mc-n{font-size:2.5rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:.5rem}
         .mc-l{font-size:0.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-sec)}
-        .mc-d{font-size:0.7rem;color:var(--text-mute);margin-top:.35rem}
+        .mc-d{font-size:0.7rem;color:var(--text-mute);margin-top:.3rem}
         .mc-info{flex:1}
 
         .m-total{
-            margin-top:1.5rem;padding:1rem 1.5rem;
+            margin-top:1.25rem;padding:1rem 1.5rem;
             background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r);
             display:flex;justify-content:space-between;align-items:center;
         }
         .m-total-l{font-size:0.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
         .m-total-v{font-size:1.3rem;font-weight:700;color:var(--gold)}
 
+        /* Single metric (Althee) */
+        .mc-single{
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:var(--r);padding:2.5rem 2rem;
+            display:flex;align-items:center;gap:2rem;
+            margin-top:2rem;max-width:400px;
+            transition:border-color .3s;
+        }
+        .mc-single:hover{border-color:var(--gold-border)}
+        .mc-single .mc-n{font-size:3rem;margin-bottom:0}
+
         /* Info card */
-        .ic{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:2rem}
-        .ir{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border)}
+        .ic{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:1.5rem}
+        .ir{display:flex;justify-content:space-between;align-items:center;padding:1rem 1.5rem;border-bottom:1px solid var(--border)}
         .ir:last-child{border-bottom:none}
         .ir-l{font-size:0.8rem;font-weight:500;color:var(--text-sec)}
         .ir-v{font-size:0.9rem;font-weight:600}
@@ -135,42 +146,38 @@
         .tbl{
             width:100%;border-collapse:separate;border-spacing:0;
             background:var(--surface);border:1px solid var(--border);
-            border-radius:var(--r);overflow:hidden;margin-top:2rem;
+            border-radius:var(--r);overflow:hidden;margin-top:1.5rem;
         }
         .tbl th{
-            padding:.9rem 1.5rem;text-align:left;
+            padding:.85rem 1.5rem;text-align:left;
             font-size:0.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
             color:var(--text-mute);background:rgba(255,255,255,0.015);border-bottom:1px solid var(--border);
         }
         .tbl th.r{text-align:right}
-        .tbl td{padding:.9rem 1.5rem;font-size:0.88rem;border-bottom:1px solid var(--border);color:var(--text-sec)}
+        .tbl td{padding:.85rem 1.5rem;font-size:0.88rem;border-bottom:1px solid var(--border);color:var(--text-sec)}
         .tbl td.r{text-align:right}
         .tbl td.b{font-weight:600;color:var(--text)}
+        .tbl td.gold{color:var(--gold);font-weight:500;font-size:0.75rem}
         .tbl tr:last-child td{border-bottom:none}
         .tbl tr:hover td{background:rgba(255,255,255,0.015)}
         .tbl .rt{background:rgba(255,255,255,0.025)}
         .tbl .rt td{font-weight:600;color:var(--text)}
-        .tbl .rf{background:var(--gold-dim)}
-        .tbl .rf td{
-            color:var(--gold);font-weight:700;font-size:1.05rem;
-            padding:1.1rem 1.5rem;border-top:2px solid var(--gold-border);border-bottom:none;
-        }
 
         /* Recap cards */
-        .recap{margin-top:2rem;display:flex;flex-direction:column;gap:1rem}
+        .recap{margin-top:1.5rem;display:flex;flex-direction:column;gap:.75rem}
         .recap-item{
             background:var(--surface);border:1px solid var(--border);
-            border-radius:var(--r);padding:1.5rem;
+            border-radius:var(--r);padding:1.25rem 1.5rem;
+            display:flex;justify-content:space-between;align-items:center;
         }
-        .recap-label{font-size:0.9rem;font-weight:600;color:var(--text);margin-bottom:0.25rem}
-        .recap-sub{font-size:0.75rem;color:var(--text-mute);margin-bottom:1rem}
-        .recap-row{display:flex;justify-content:space-between;align-items:center}
-        .recap-qty{font-size:0.8rem;color:var(--text-sec)}
-        .recap-amt{font-size:1.1rem;font-weight:700;color:var(--text)}
+        .recap-left{flex:1}
+        .recap-label{font-size:0.9rem;font-weight:600;color:var(--text)}
+        .recap-sub{font-size:0.72rem;color:var(--text-mute);margin-top:.15rem}
+        .recap-amt{font-size:1.1rem;font-weight:700;color:var(--text);white-space:nowrap;margin-left:1rem}
 
         .recap-total{
             background:var(--gold-dim);border:1px solid var(--gold-border);
-            border-radius:var(--r);padding:1.5rem;
+            border-radius:var(--r);padding:1.25rem 1.5rem;
             display:flex;justify-content:space-between;align-items:center;
         }
         .recap-total-label{
@@ -178,10 +185,6 @@
             text-transform:uppercase;color:var(--gold);
         }
         .recap-total-amt{font-size:1.5rem;font-weight:700;color:var(--gold)}
-
-        @media(max-width:440px){
-            .recap-total-amt{font-size:1.3rem}
-        }
 
         /* Nav */
         .nav{
@@ -216,46 +219,47 @@
             .heading{font-size:1.5rem;margin-bottom:.75rem}
             .tag{margin-bottom:.5rem}
             .desc{font-size:.85rem}
-            .metrics{gap:.75rem;margin-top:1.5rem}
+            .metrics{gap:.75rem;margin-top:1.25rem}
             .mc{padding:1.25rem 1rem}
             .mc-n{font-size:2rem}
             .mc-l{font-size:.6rem}
             .m-total{margin-top:1rem}
+            .mc-single{padding:1.5rem;gap:1.25rem;margin-top:1.25rem}
+            .mc-single .mc-n{font-size:2.5rem}
             .nav{bottom:1rem}
             .counter{bottom:1.25rem;right:1.5rem}
-            .tbl{margin-top:1.25rem}
-            .tbl th,.tbl td{padding:.7rem 1rem;font-size:.78rem}
-            .ir{padding:.9rem 1.25rem}
-            .ic{margin-top:1.25rem}
-            .recap{margin-top:1.25rem;gap:.75rem}
-            .recap-item{padding:1.25rem}
-            .recap-total{padding:1.25rem}
+            .tbl{margin-top:1rem}
+            .tbl th,.tbl td{padding:.65rem .9rem;font-size:.78rem}
+            .ir{padding:.85rem 1.1rem}
+            .ic{margin-top:1rem}
+            .recap{margin-top:1rem;gap:.5rem}
+            .recap-item{padding:1rem 1.25rem}
+            .recap-total{padding:1rem 1.25rem}
+            .recap-total-amt{font-size:1.3rem}
         }
 
         @media(max-width:440px){
             .slide{padding:2rem 1.25rem 3.5rem}
             .heading{font-size:1.3rem;margin-bottom:.5rem}
+            .title-main{font-size:2.2rem}
             .metrics{grid-template-columns:1fr;gap:.5rem;margin-top:1rem}
             .mc{display:flex;align-items:center;gap:1.25rem;text-align:left;padding:.75rem 1rem}
             .mc-n{font-size:1.75rem;min-width:2.5rem;margin-bottom:0}
             .m-total{flex-direction:column;gap:.25rem;align-items:flex-start;margin-top:.75rem;padding:.75rem 1rem}
             .brand,.counter{display:none}
-            .title-main{font-size:2.5rem}
-            .ir{flex-direction:column;align-items:flex-start;gap:.2rem;padding:.75rem 1rem}
-            .tbl{margin-top:1rem}
-            .tbl th,.tbl td{padding:.6rem .75rem;font-size:.72rem}
-            .tbl .rf td{font-size:.9rem}
-            .recap{margin-top:1rem;gap:.5rem}
-            .recap-item{padding:1rem}
-            .recap-sub{margin-bottom:.75rem}
-            .recap-total{padding:1rem}
-            .recap-total-amt{font-size:1.3rem}
+            .ir{flex-direction:column;align-items:flex-start;gap:.15rem;padding:.7rem 1rem}
+            .tbl th,.tbl td{padding:.5rem .65rem;font-size:.7rem}
+            .recap-item{flex-direction:column;align-items:flex-start;gap:.5rem;padding:.9rem 1rem}
+            .recap-amt{margin-left:0;font-size:1rem}
+            .recap-total{flex-direction:column;align-items:flex-start;gap:.25rem;padding:.9rem 1rem}
+            .recap-total-amt{font-size:1.2rem}
+            .mc-single{flex-direction:column;text-align:center;gap:.75rem;padding:1.25rem}
         }
     </style>
 </head>
 <body>
 
-    <div class="progress" id="progress" style="width:16.66%"></div>
+    <div class="progress" id="progress" style="width:14.28%"></div>
     <div class="brand">BOTE.</div>
 
     <div class="deck">
@@ -263,27 +267,19 @@
         <!-- 1. Title -->
         <div class="slide active">
             <div class="slide-inner tc">
-                <h1 class="title-main rv">HYGEE <span>x</span> BOTE</h1>
+                <h1 class="title-main rv">HYGEE / ALTHEE <span>x</span> BOTE</h1>
                 <div class="accent-bar"></div>
                 <div class="title-sub rv d2">Devis Hygee Days 2026</div>
             </div>
         </div>
 
-        <!-- 2. Contexte -->
+        <!-- 2. Hygee Production -->
         <div class="slide">
             <div class="slide-inner">
-                <div class="tag rv">Contexte</div>
-                <h2 class="heading rv d1">Hygee Days <strong>2026</strong></h2>
-                <p class="desc rv d2">Production dediee aux Hygee Days 2026. Campagnes, flows et supports de conversion pour l'operation commerciale de fin mars - debut avril.</p>
-            </div>
-        </div>
-
-        <!-- 3. Production -->
-        <div class="slide">
-            <div class="slide-inner">
-                <div class="tag rv">Production</div>
+                <div class="tag rv">Hygee</div>
                 <h2 class="heading rv d1"><strong>31</strong> livrables</h2>
-                <div class="metrics rv d2">
+                <p class="desc rv d2">Production Hygee Days 2026. Campagnes, flows et supports de conversion, fin mars - debut avril.</p>
+                <div class="metrics rv d3">
                     <div class="mc">
                         <div class="mc-n">25</div>
                         <div class="mc-info">
@@ -306,9 +302,21 @@
                         </div>
                     </div>
                 </div>
-                <div class="m-total rv d3">
-                    <div class="m-total-l">Total</div>
-                    <div class="m-total-v">31 unites</div>
+            </div>
+        </div>
+
+        <!-- 3. Althee Production -->
+        <div class="slide">
+            <div class="slide-inner">
+                <div class="tag rv">Althee</div>
+                <h2 class="heading rv d1"><strong>20</strong> e-mails</h2>
+                <p class="desc rv d2">Production e-mail dediee a Althee. Flows et campagnes sur la meme periode.</p>
+                <div class="mc-single rv d3">
+                    <div class="mc-n">20</div>
+                    <div class="mc-info">
+                        <div class="mc-l">E-mails</div>
+                        <div class="mc-d">Flows + campagnes</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -318,19 +326,19 @@
             <div class="slide-inner">
                 <div class="tag rv">Tarification</div>
                 <h2 class="heading rv d1">Principe de <strong>tarification</strong></h2>
-                <p class="desc rv d2">Votre contrat mensuel inclut <strong>11 unites</strong>. Le volume supplementaire est facture selon une grille degressive.</p>
+                <p class="desc rv d2">Le contrat Hygee inclut <strong>11 unites</strong>. Le volume supplementaire est facture selon une grille degressive continue.</p>
                 <div class="ic rv d3">
                     <div class="ir">
-                        <span class="ir-l">Volume total</span>
-                        <span class="ir-v">31 unites</span>
+                        <span class="ir-l">Hygee</span>
+                        <span class="ir-v">31 unites - 11 incluses = 20</span>
                     </div>
                     <div class="ir">
-                        <span class="ir-l">Contrat de base (inclus)</span>
-                        <span class="ir-v">- 11 unites</span>
+                        <span class="ir-l">Althee</span>
+                        <span class="ir-v">20 unites</span>
                     </div>
                     <div class="ir hl">
-                        <span class="ir-l">Volume supplementaire facture</span>
-                        <span class="ir-v">20 unites</span>
+                        <span class="ir-l">Total supplementaire</span>
+                        <span class="ir-v">40 unites</span>
                     </div>
                 </div>
             </div>
@@ -341,32 +349,37 @@
             <div class="slide-inner">
                 <div class="tag rv">Tarification</div>
                 <h2 class="heading rv d1">Grille <strong>degressive</strong></h2>
-                <p class="desc rv d2">Application de la grille tarifaire sur 20 unites supplementaires.</p>
-                <table class="tbl rv d3">
+                <table class="tbl rv d2">
                     <thead>
                         <tr>
                             <th>Tranche</th>
                             <th>Unites</th>
-                            <th class="r">Prix unitaire</th>
+                            <th class="r">Prix unit.</th>
                             <th class="r">Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>Tranche 1</td>
+                            <td>Tranche 1 <span class="gold">HYGEE</span></td>
                             <td>10</td>
                             <td class="r">200 &#8364;</td>
                             <td class="r b">2 000 &#8364;</td>
                         </tr>
                         <tr>
-                            <td>Tranche 2</td>
+                            <td>Tranche 2 <span class="gold">HYGEE</span></td>
                             <td>10</td>
                             <td class="r">150 &#8364;</td>
                             <td class="r b">1 500 &#8364;</td>
                         </tr>
+                        <tr>
+                            <td>Tranche 3 <span class="gold">ALTHEE</span></td>
+                            <td>20</td>
+                            <td class="r">125 &#8364;</td>
+                            <td class="r b">2 500 &#8364;</td>
+                        </tr>
                         <tr class="rt">
-                            <td colspan="3">Sous-total production</td>
-                            <td class="r b">3 500 &#8364;</td>
+                            <td colspan="3">Total production</td>
+                            <td class="r b">6 000 &#8364;</td>
                         </tr>
                     </tbody>
                 </table>
@@ -380,16 +393,22 @@
                 <h2 class="heading rv d1">Total <strong>projet</strong></h2>
                 <div class="recap rv d2">
                     <div class="recap-item">
-                        <div class="recap-label">Production supplementaire</div>
-                        <div class="recap-sub">E-mails, WhatsApp, Popups</div>
-                        <div class="recap-row">
-                            <span class="recap-qty">20 unites</span>
-                            <span class="recap-amt">3 500,00 &#8364;</span>
+                        <div class="recap-left">
+                            <div class="recap-label">Hygee</div>
+                            <div class="recap-sub">20 unites suppl. (tranches 1+2)</div>
                         </div>
+                        <div class="recap-amt">3 500,00 &#8364;</div>
+                    </div>
+                    <div class="recap-item">
+                        <div class="recap-left">
+                            <div class="recap-label">Althee</div>
+                            <div class="recap-sub">20 unites (tranche 3)</div>
+                        </div>
+                        <div class="recap-amt">2 500,00 &#8364;</div>
                     </div>
                     <div class="recap-total">
                         <span class="recap-total-label">Total HT</span>
-                        <span class="recap-total-amt">3 500,00 &#8364;</span>
+                        <span class="recap-total-amt">6 000,00 &#8364;</span>
                     </div>
                 </div>
             </div>
@@ -403,7 +422,7 @@
         <div class="dots" id="dots"></div>
         <button class="nav-btn" onclick="go(1)" aria-label="Suivant">&#8594;</button>
     </div>
-    <div class="counter"><span class="c" id="cur">01</span> / <span id="tot">06</span></div>
+    <div class="counter"><span class="c" id="cur">01</span> / <span id="tot">07</span></div>
 
     <script>
         const slides=document.querySelectorAll('.slide'),N=slides.length;
@@ -421,6 +440,7 @@
             slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));
             document.querySelectorAll('.dot').forEach((d,idx)=>d.classList.toggle('on',idx===i));
             document.getElementById('cur').textContent=String(i+1).padStart(2,'0');
+            document.getElementById('tot').textContent=String(N).padStart(2,'0');
             document.getElementById('progress').style.width=((i+1)/N*100)+'%';
         }
 
