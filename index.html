@@ -3,730 +3,406 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devis Hygée Days - Partie 2</title>
+    <title>HYGEE x BOTE — HD26</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg: #0B0B0F;
+            --surface: #141418;
+            --border: #222228;
+            --text: #EAEAEE;
+            --text-sec: #8A8A92;
+            --text-mute: #55555E;
+            --gold: #C8A96E;
+            --gold-dim: rgba(200,169,110,0.12);
+            --gold-border: rgba(200,169,110,0.25);
+            --r: 10px;
+            --ease: cubic-bezier(0.16,1,0.3,1);
         }
 
-        body {
-            font-family: 'Courier New', monospace;
-            background: #f5f5f5;
-            color: #1a1a1a;
-            overflow: hidden;
+        *{margin:0;padding:0;box-sizing:border-box}
+        ::selection{background:rgba(200,169,110,0.3);color:var(--text)}
+        html,body{height:100%;overflow:hidden}
+
+        body{
+            font-family:'Inter',-apple-system,BlinkMacSystemFont,system-ui,sans-serif;
+            background:var(--bg);
+            background-image:radial-gradient(ellipse at 50% 0%,rgba(200,169,110,0.04) 0%,transparent 50%);
+            color:var(--text);
+            -webkit-font-smoothing:antialiased;
+            -moz-osx-font-smoothing:grayscale;
         }
 
-        .slideshow {
-            width: 100vw;
-            height: 100vh;
-            position: relative;
+        body::after{
+            content:'';position:fixed;inset:0;opacity:0.018;
+            background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            pointer-events:none;z-index:50;
         }
 
-        .slide {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            top: 0;
-            left: 0;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            padding: 4rem 6rem;
+        .progress{
+            position:fixed;top:0;left:0;height:2px;
+            background:var(--gold);
+            box-shadow:0 0 12px rgba(200,169,110,0.3);
+            transition:width 0.5s var(--ease);z-index:200;
         }
 
-        @media (max-width: 1024px) {
-            .slide {
-                padding: 3rem 4rem;
-            }
+        .brand{
+            position:fixed;top:2rem;right:3rem;
+            font-size:0.65rem;font-weight:600;letter-spacing:0.2em;
+            color:var(--text-mute);z-index:100;
         }
 
-        @media (max-width: 768px) {
-            .slide {
-                padding: 2rem 2rem;
-                justify-content: flex-start;
-                padding-top: 4rem;
-            }
+        .deck{position:relative;width:100vw;height:100vh}
+
+        .slide{
+            position:absolute;inset:0;
+            display:flex;align-items:center;justify-content:center;
+            padding:5rem 4rem 6rem;
+            opacity:0;pointer-events:none;transition:opacity 0.5s ease;
+        }
+        .slide.active{opacity:1;pointer-events:auto}
+        .slide-inner{width:100%;max-width:900px}
+
+        .rv{opacity:0;transform:translateY(24px);transition:opacity 0.7s ease,transform 0.7s var(--ease)}
+        .slide.active .rv{opacity:1;transform:translateY(0)}
+        .slide.active .rv.d1{transition-delay:.08s}
+        .slide.active .rv.d2{transition-delay:.16s}
+        .slide.active .rv.d3{transition-delay:.24s}
+        .slide.active .rv.d4{transition-delay:.32s}
+
+        @media(prefers-reduced-motion:reduce){
+            .rv{transition:none!important;opacity:1!important;transform:none!important}
+            .slide,.progress{transition:none!important}
         }
 
-        @media (max-width: 480px) {
-            .slide {
-                padding: 1.5rem 1.5rem;
-                padding-top: 3rem;
-            }
+        /* Title */
+        .tc{text-align:center}
+        .title-main{
+            font-size:clamp(2.8rem,8vw,5rem);
+            font-weight:200;letter-spacing:-0.04em;line-height:1.05;
+        }
+        .title-main span{font-weight:500}
+        .accent-bar{
+            width:0;height:2px;background:var(--gold);margin:2rem auto;
+            transition:width 0.9s var(--ease) 0.25s;
+        }
+        .slide.active .accent-bar{width:60px}
+        .title-sub{
+            font-size:clamp(0.75rem,1.5vw,0.95rem);
+            font-weight:400;letter-spacing:0.2em;text-transform:uppercase;color:var(--text-mute);
         }
 
-        .slide.active {
-            opacity: 1;
+        /* Section */
+        .tag{font-size:0.65rem;font-weight:600;letter-spacing:0.25em;text-transform:uppercase;color:var(--gold);margin-bottom:0.75rem}
+        .heading{font-size:clamp(1.8rem,4vw,2.8rem);font-weight:300;letter-spacing:-0.03em;line-height:1.15;margin-bottom:1rem}
+        .heading strong{font-weight:600}
+        .desc{font-size:0.95rem;line-height:1.7;color:var(--text-sec);max-width:600px}
+        .desc strong{color:var(--text);font-weight:600}
+
+        /* Metrics */
+        .metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:1.25rem;margin-top:2.5rem}
+        .mc{
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:var(--r);padding:2rem 1.5rem;text-align:center;
+            transition:border-color .3s,transform .3s;
+        }
+        .mc:hover{border-color:var(--gold-border);transform:translateY(-3px)}
+        .mc-n{font-size:2.75rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:.6rem}
+        .mc-l{font-size:0.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--text-sec)}
+        .mc-d{font-size:0.7rem;color:var(--text-mute);margin-top:.35rem}
+        .mc-info{flex:1}
+
+        .m-total{
+            margin-top:1.5rem;padding:1rem 1.5rem;
+            background:var(--gold-dim);border:1px solid var(--gold-border);border-radius:var(--r);
+            display:flex;justify-content:space-between;align-items:center;
+        }
+        .m-total-l{font-size:0.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+        .m-total-v{font-size:1.3rem;font-weight:700;color:var(--gold)}
+
+        /* Info card */
+        .ic{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:2rem}
+        .ir{display:flex;justify-content:space-between;align-items:center;padding:1.1rem 1.5rem;border-bottom:1px solid var(--border)}
+        .ir:last-child{border-bottom:none}
+        .ir-l{font-size:0.8rem;font-weight:500;color:var(--text-sec)}
+        .ir-v{font-size:0.9rem;font-weight:600}
+        .ir.hl{background:var(--gold-dim)}
+        .ir.hl .ir-l,.ir.hl .ir-v{color:var(--gold);font-weight:700}
+
+        /* Tables */
+        .tbl{
+            width:100%;border-collapse:separate;border-spacing:0;
+            background:var(--surface);border:1px solid var(--border);
+            border-radius:var(--r);overflow:hidden;margin-top:2rem;
+        }
+        .tbl th{
+            padding:.9rem 1.5rem;text-align:left;
+            font-size:0.65rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;
+            color:var(--text-mute);background:rgba(255,255,255,0.015);border-bottom:1px solid var(--border);
+        }
+        .tbl th.r{text-align:right}
+        .tbl td{padding:.9rem 1.5rem;font-size:0.88rem;border-bottom:1px solid var(--border);color:var(--text-sec)}
+        .tbl td.r{text-align:right}
+        .tbl td.b{font-weight:600;color:var(--text)}
+        .tbl tr:last-child td{border-bottom:none}
+        .tbl tr:hover td{background:rgba(255,255,255,0.015)}
+        .tbl .rt{background:rgba(255,255,255,0.025)}
+        .tbl .rt td{font-weight:600;color:var(--text)}
+        .tbl .rf{background:var(--gold-dim)}
+        .tbl .rf td{
+            color:var(--gold);font-weight:700;font-size:1.05rem;
+            padding:1.1rem 1.5rem;border-top:2px solid var(--gold-border);border-bottom:none;
         }
 
-        .slide-header {
-            margin-bottom: 3rem;
+        /* Nav */
+        .nav{
+            position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);
+            display:flex;align-items:center;gap:.75rem;z-index:100;
+        }
+        .nav-btn{
+            width:2.25rem;height:2.25rem;border:1px solid var(--border);
+            border-radius:50%;background:var(--surface);color:var(--text-mute);
+            cursor:pointer;display:flex;align-items:center;justify-content:center;
+            font-size:0.85rem;transition:all .25s ease;-webkit-tap-highlight-color:transparent;
+        }
+        .nav-btn:hover{border-color:var(--gold);color:var(--gold);background:var(--gold-dim)}
+        .nav-btn:active{transform:scale(0.92)}
+
+        .dots{display:flex;gap:.4rem}
+        .dot{width:7px;height:7px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .3s ease}
+        .dot.on{background:var(--gold);transform:scale(1.35);box-shadow:0 0 8px rgba(200,169,110,0.35)}
+
+        .counter{
+            position:fixed;bottom:2.25rem;right:3rem;
+            font-size:0.7rem;font-weight:500;letter-spacing:.08em;color:var(--text-mute);z-index:100;
+        }
+        .counter .c{color:var(--text-sec);font-weight:600}
+
+        /* Responsive */
+        @media(max-width:900px){.slide{padding:4rem 3rem 5.5rem}.brand{top:1.5rem;right:2rem}}
+
+        @media(max-width:680px){
+            .slide{padding:3.5rem 2rem 5rem;align-items:flex-start}
+            .brand{top:1.25rem;right:1.5rem;font-size:.6rem}
+            .metrics{gap:.75rem}
+            .mc{padding:1.25rem 1rem}
+            .mc-n{font-size:2rem}
+            .mc-l{font-size:.6rem}
+            .nav{bottom:1.25rem}
+            .counter{bottom:1.5rem;right:1.5rem}
+            .tbl th,.tbl td{padding:.7rem 1rem;font-size:.78rem}
+            .ir{padding:.9rem 1.25rem}
         }
 
-        .slide-title {
-            font-size: 4rem;
-            font-weight: 400;
-            letter-spacing: -0.02em;
-            margin-bottom: 0;
-            text-transform: uppercase;
-            border-bottom: 2px solid #1a1a1a;
-            padding-bottom: 1rem;
-        }
-
-        @media (max-width: 1024px) {
-            .slide-title {
-                font-size: 3rem;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .slide-title {
-                font-size: 2.5rem;
-                padding-bottom: 0.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .slide-title {
-                font-size: 2rem;
-                padding-bottom: 0.5rem;
-            }
-        }
-
-        .slide-subtitle {
-            font-size: 1.1rem;
-            font-weight: 400;
-            letter-spacing: 0.1em;
-            text-transform: uppercase;
-            color: #666;
-            margin-bottom: 0.5rem;
-        }
-
-        @media (max-width: 768px) {
-            .slide-subtitle {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .slide-subtitle {
-                font-size: 0.9rem;
-            }
-        }
-
-        .slide-content {
-            max-width: 1200px;
-        }
-
-        .info-box {
-            background: white;
-            border: 1px solid #1a1a1a;
-            padding: 2.5rem;
-            margin-bottom: 2rem;
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-box {
-                padding: 1.5rem;
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .info-box {
-                padding: 1.25rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid #e0e0e0;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-label {
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.9rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-label {
-                font-size: 0.8rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .info-label {
-                font-size: 0.75rem;
-            }
-        }
-
-        .info-value {
-            font-size: 1.1rem;
-        }
-
-        @media (max-width: 768px) {
-            .info-value {
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .info-value {
-                font-size: 0.85rem;
-            }
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border: 1px solid #1a1a1a;
-            font-size: 0.95rem;
-        }
-
-        @media (max-width: 768px) {
-            table {
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            table {
-                font-size: 0.75rem;
-            }
-        }
-
-        th {
-            background: #1a1a1a;
-            color: white;
-            padding: 1rem;
-            text-align: left;
-            font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            font-size: 0.85rem;
-        }
-
-        @media (max-width: 768px) {
-            th {
-                padding: 0.75rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            th {
-                padding: 0.5rem;
-                font-size: 0.7rem;
-            }
-        }
-
-        td {
-            padding: 1rem;
-            border-bottom: 1px solid #e0e0e0;
-            font-size: 0.95rem;
-        }
-
-        @media (max-width: 768px) {
-            td {
-                padding: 0.75rem;
-                font-size: 0.85rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            td {
-                padding: 0.5rem;
-                font-size: 0.75rem;
-            }
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        .total-row {
-            font-weight: 600;
-            background: #f9f9f9;
-        }
-
-        .final-row {
-            font-weight: 700;
-            font-size: 1.2rem;
-            background: #1a1a1a;
-            color: white;
-        }
-
-        @media (max-width: 768px) {
-            .final-row {
-                font-size: 1.1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .final-row {
-                font-size: 1rem;
-            }
-        }
-
-        .navigation {
-            position: fixed;
-            bottom: 3rem;
-            left: 50%;
-            transform: translateX(-50%);
-            display: flex;
-            gap: 1rem;
-            z-index: 100;
-        }
-
-        @media (max-width: 768px) {
-            .navigation {
-                bottom: 2rem;
-                gap: 0.75rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .navigation {
-                bottom: 1.5rem;
-                gap: 0.5rem;
-            }
-        }
-
-        .nav-btn {
-            width: 3rem;
-            height: 3rem;
-            border: 2px solid #1a1a1a;
-            background: white;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .nav-btn {
-                width: 2.5rem;
-                height: 2.5rem;
-                font-size: 1rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-btn {
-                width: 2rem;
-                height: 2rem;
-                font-size: 0.9rem;
-                border: 1.5px solid #1a1a1a;
-            }
-        }
-
-        .nav-btn:hover {
-            background: #1a1a1a;
-            color: white;
-        }
-
-        .nav-btn:active {
-            transform: scale(0.95);
-        }
-
-        .nav-dot {
-            width: 12px;
-            height: 12px;
-            border: 2px solid #1a1a1a;
-            background: transparent;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        @media (max-width: 768px) {
-            .nav-dot {
-                width: 10px;
-                height: 10px;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .nav-dot {
-                width: 8px;
-                height: 8px;
-                border: 1.5px solid #1a1a1a;
-            }
-        }
-
-        .nav-dot.active {
-            background: #1a1a1a;
-        }
-
-        .slide-counter {
-            position: fixed;
-            bottom: 3rem;
-            right: 3rem;
-            font-size: 1rem;
-            letter-spacing: 0.1em;
-            font-weight: 600;
-        }
-
-        @media (max-width: 768px) {
-            .slide-counter {
-                bottom: 2rem;
-                right: 2rem;
-                font-size: 0.9rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .slide-counter {
-                bottom: 1.5rem;
-                right: 1.5rem;
-                font-size: 0.8rem;
-            }
-        }
-
-        .context-text {
-            line-height: 1.6;
-            font-size: 1rem;
-        }
-
-        @media (max-width: 768px) {
-            .context-text {
-                font-size: 0.95rem;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .context-text {
-                font-size: 0.85rem;
-                line-height: 1.5;
-            }
+        @media(max-width:440px){
+            .slide{padding:3rem 1.5rem 4.5rem}
+            .metrics{grid-template-columns:1fr;gap:.6rem}
+            .mc{display:flex;align-items:center;gap:1.25rem;text-align:left;padding:.9rem 1.25rem}
+            .mc-n{font-size:1.75rem;min-width:2.5rem;margin-bottom:0}
+            .m-total{flex-direction:column;gap:.25rem;align-items:flex-start}
+            .brand,.counter{display:none}
+            .title-main{font-size:2.5rem}
+            .ir{flex-direction:column;align-items:flex-start;gap:.2rem}
+            .tbl th,.tbl td{padding:.6rem .75rem;font-size:.72rem}
+            .tbl .rf td{font-size:.9rem}
         }
     </style>
 </head>
 <body>
-    <div class="slideshow">
-        <!-- Slide 1: Title -->
+
+    <div class="progress" id="progress" style="width:16.66%"></div>
+    <div class="brand">BOTE.</div>
+
+    <div class="deck">
+
+        <!-- 1. Title -->
         <div class="slide active">
-            <div class="slide-content" style="display: flex; align-items: center; justify-content: center; height: 100%; text-align: center;">
-                <div>
-                    <h1 class="slide-title" style="border-bottom: none; margin-bottom: 0; font-size: clamp(2.5rem, 8vw, 5rem);">HYGÉE × BOTE</h1>
-                    <div class="slide-subtitle" style="font-size: clamp(1rem, 3vw, 1.5rem); margin-top: 3rem;">Hygée Days 2025 - Partie 2</div>
+            <div class="slide-inner tc">
+                <h1 class="title-main rv">HYGEE <span>x</span> BOTE</h1>
+                <div class="accent-bar"></div>
+                <div class="title-sub rv d2">Devis Hygee Days 2026</div>
+            </div>
+        </div>
+
+        <!-- 2. Contexte -->
+        <div class="slide">
+            <div class="slide-inner">
+                <div class="tag rv">Contexte</div>
+                <h2 class="heading rv d1">Hygee Days <strong>2026</strong></h2>
+                <p class="desc rv d2">Production dediee aux Hygee Days 2026. Campagnes, flows et supports de conversion pour l'operation commerciale de fin mars - debut avril.</p>
+            </div>
+        </div>
+
+        <!-- 3. Production -->
+        <div class="slide">
+            <div class="slide-inner">
+                <div class="tag rv">Production</div>
+                <h2 class="heading rv d1"><strong>31</strong> livrables</h2>
+                <div class="metrics rv d2">
+                    <div class="mc">
+                        <div class="mc-n">25</div>
+                        <div class="mc-info">
+                            <div class="mc-l">E-mails</div>
+                            <div class="mc-d">Flows + newsletters</div>
+                        </div>
+                    </div>
+                    <div class="mc">
+                        <div class="mc-n">2</div>
+                        <div class="mc-info">
+                            <div class="mc-l">WhatsApp</div>
+                            <div class="mc-d">Messages</div>
+                        </div>
+                    </div>
+                    <div class="mc">
+                        <div class="mc-n">4</div>
+                        <div class="mc-info">
+                            <div class="mc-l">Popups</div>
+                            <div class="mc-d">Conversion</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="m-total rv d3">
+                    <div class="m-total-l">Total</div>
+                    <div class="m-total-v">31 unites</div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 2: Contexte -->
+        <!-- 4. Tarification -->
         <div class="slide">
-            <div class="slide-header">
-                <h2 class="slide-title">Contexte</h2>
-            </div>
-            <div class="slide-content">
-                <div class="info-box">
-                    <p class="context-text">Production supplémentaire et accompagnement pour la <strong>Partie 2 des Hygée Days 2025</strong>.</p>
-                    <p class="context-text" style="margin-top: 1rem;">Période concernée du 28/11 au 01/12.</p>
+            <div class="slide-inner">
+                <div class="tag rv">Tarification</div>
+                <h2 class="heading rv d1">Principe de <strong>tarification</strong></h2>
+                <p class="desc rv d2">Votre contrat mensuel inclut <strong>11 unites</strong>. Le volume supplementaire est facture selon une grille degressive.</p>
+                <div class="ic rv d3">
+                    <div class="ir">
+                        <span class="ir-l">Volume total</span>
+                        <span class="ir-v">31 unites</span>
+                    </div>
+                    <div class="ir">
+                        <span class="ir-l">Contrat de base (inclus)</span>
+                        <span class="ir-v">- 11 unites</span>
+                    </div>
+                    <div class="ir hl">
+                        <span class="ir-l">Volume supplementaire facture</span>
+                        <span class="ir-v">20 unites</span>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <!-- Slide 3: Production -->
+        <!-- 5. Grille -->
         <div class="slide">
-            <div class="slide-header">
-                <h2 class="slide-title">Production</h2>
-            </div>
-            <div class="slide-content">
-                <p class="context-text" style="margin-bottom: 1.5rem;">Volumes supplémentaires de production pour la Partie 2.</p>
-                <table>
+            <div class="slide-inner">
+                <div class="tag rv">Tarification</div>
+                <h2 class="heading rv d1">Grille <strong>degressive</strong></h2>
+                <p class="desc rv d2">Application de la grille tarifaire sur 20 unites supplementaires.</p>
+                <table class="tbl rv d3">
                     <thead>
                         <tr>
-                            <th>Livrable</th>
-                            <th>Quantité</th>
+                            <th>Tranche</th>
+                            <th>Unites</th>
+                            <th class="r">Prix unitaire</th>
+                            <th class="r">Total</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>E-mails supplémentaires</td>
-                            <td>12 livrables (flows + newsletters)</td>
+                            <td>Tranche 1</td>
+                            <td>10</td>
+                            <td class="r">200 &#8364;</td>
+                            <td class="r b">2 000 &#8364;</td>
                         </tr>
                         <tr>
-                            <td>WhatsApp</td>
-                            <td>Compris</td>
+                            <td>Tranche 2</td>
+                            <td>10</td>
+                            <td class="r">150 &#8364;</td>
+                            <td class="r b">1 500 &#8364;</td>
                         </tr>
-                        <tr>
-                            <td>Popups</td>
-                            <td>Compris</td>
+                        <tr class="rt">
+                            <td colspan="3">Sous-total production</td>
+                            <td class="r b">3 500 &#8364;</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Slide 4: Accompagnement -->
+        <!-- 6. Recap -->
         <div class="slide">
-            <div class="slide-header">
-                <h2 class="slide-title">Accompagnement</h2>
-                <div class="slide-subtitle">Support intensif</div>
-            </div>
-            <div class="slide-content">
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;">
-                    <div>
-                        <h3 style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2.5rem; border-bottom: 2px solid #1a1a1a; padding-bottom: 0.75rem;">Inclus</h3>
-                        
-                        <div style="margin-bottom: 2.5rem;">
-                            <div style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.5rem;">Présence / Réactivité</div>
-                            <div style="font-size: 0.95rem; border-left: 3px solid #1a1a1a; padding-left: 1.25rem; line-height: 1.5;">Disponibilité complète période courte</div>
-                        </div>
-
-                        <div style="margin-bottom: 2.5rem;">
-                            <div style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.5rem;">Coordination</div>
-                            <div style="font-size: 0.95rem; border-left: 3px solid #1a1a1a; padding-left: 1.25rem; line-height: 1.5;">Suivi rapproché 28/11-01/12</div>
-                        </div>
-
-                        <div>
-                            <div style="font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; color: #999; margin-bottom: 0.5rem;">Livrables supplémentaires</div>
-                            <div style="font-size: 0.95rem; border-left: 3px solid #1a1a1a; padding-left: 1.25rem; line-height: 1.5;">Outils annexes si nécessaire</div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 style="font-size: 0.85rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2.5rem; border-bottom: 2px solid #1a1a1a; padding-bottom: 0.75rem;">Tarification</h3>
-                        
-                        <p style="font-size: 0.95rem; line-height: 1.6; margin-bottom: 3rem; color: #333;">Forfait accompagnement<br>Période 28/11-01/12</p>
-                        
-                        <div style="font-size: 3.5rem; font-weight: 700; letter-spacing: -0.02em; text-decoration: line-through; color: #999;">750€</div>
-                        <div style="font-size: 1.2rem; font-weight: 600; letter-spacing: 0.05em; margin-top: 1rem; color: #2e7d32;">OFFERT</div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Slide 5: Principe de tarification -->
-        <div class="slide">
-            <div class="slide-header">
-                <h2 class="slide-title">Principe de tarification</h2>
-                <div class="slide-subtitle">Hygée Days - Partie 2</div>
-            </div>
-            <div class="slide-content">
-                <p class="context-text" style="margin-bottom: 1.5rem;">Le volume du contrat de base a été entièrement consommé par la <strong>Partie 1 des Hygée Days</strong>. L'intégralité de la Partie 2 est donc facturée selon la grille dégressive.</p>
-                
-                <div class="info-box" style="margin-bottom: 1.5rem;">
-                    <div class="info-row">
-                        <span class="info-label">Volume total Partie 2</span>
-                        <span class="info-value">12 e-mails supplémentaires</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Équivalent en unités</span>
-                        <span class="info-value">12 unités</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-label">Contrat de base (restant)</span>
-                        <span class="info-value">0 unité</span>
-                    </div>
-                    <div class="info-row" style="border-bottom: 2px solid #1a1a1a; padding-bottom: 1rem;">
-                        <span class="info-label" style="font-size: 1.05rem;">Volume supplémentaire facturé</span>
-                        <span class="info-value" style="font-size: 1.15rem; font-weight: 700;">12 unités</span>
-                    </div>
-                </div>
-
-                <p class="context-text" style="color: #666; font-size: 0.9rem;">Grille dégressive détaillée slide suivante.</p>
-            </div>
-        </div>
-
-        <!-- Slide 6: Calcul détaillé -->
-        <div class="slide">
-            <div class="slide-header">
-                <h2 class="slide-title">Tarification</h2>
-                <div class="slide-subtitle">Grille dégressive - Partie 2</div>
-            </div>
-            <div class="slide-content">
-                <p class="context-text" style="margin-bottom: 1.5rem;">Application de la grille tarifaire sur 12 unités supplémentaires.</p>
-                <table>
+            <div class="slide-inner">
+                <div class="tag rv">Recapitulatif</div>
+                <h2 class="heading rv d1">Total <strong>projet</strong></h2>
+                <table class="tbl rv d2">
                     <thead>
                         <tr>
-                            <th>Tranches</th>
-                            <th>Prix unitaire</th>
-                            <th>Total</th>
+                            <th>Designation</th>
+                            <th class="r">Quantite</th>
+                            <th class="r">Montant HT</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>0-10 unités</td>
-                            <td>200€</td>
-                            <td>2 000€</td>
+                            <td>Production supplementaire (E-mails, WhatsApp, Popups)</td>
+                            <td class="r">20 unites</td>
+                            <td class="r b">3 500,00 &#8364;</td>
                         </tr>
-                        <tr>
-                            <td>10-12 unités (2 unités)</td>
-                            <td>150€</td>
-                            <td>300€</td>
-                        </tr>
-                        <tr class="total-row">
-                            <td colspan="2">Sous-total production</td>
-                            <td>2 300€</td>
+                        <tr class="rf">
+                            <td colspan="2" style="text-align:right;letter-spacing:.05em">TOTAL HT</td>
+                            <td class="r" style="font-size:1.2rem;white-space:nowrap">3 500,00 &#8364;</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
         </div>
 
-        <!-- Slide 7: Total final -->
-        <div class="slide">
-            <div class="slide-header">
-                <h2 class="slide-title">Récapitulatif</h2>
-                <div class="slide-subtitle">Hygée Days 2025 - Partie 2</div>
-            </div>
-            <div class="slide-content">
-                <p class="context-text" style="margin-bottom: 1.5rem;">Total projet avec remise partenaire appliquée.</p>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Désignation</th>
-                            <th style="text-align: right; width: 150px;">Quantité</th>
-                            <th style="text-align: right; width: 180px;">Montant HT</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Production (E-mails)</td>
-                            <td style="text-align: right;">12 unités</td>
-                            <td style="text-align: right;">2 300,00 €</td>
-                        </tr>
-                        <tr>
-                            <td>Accompagnement stratégique</td>
-                            <td style="text-align: right;">1 forfait</td>
-                            <td style="text-align: right; color: #2e7d32; font-weight: 600;">OFFERT</td>
-                        </tr>
-                        <tr style="height: 0.5rem;">
-                            <td colspan="3" style="border-bottom: none;"></td>
-                        </tr>
-                        <tr class="total-row">
-                            <td colspan="2" style="text-align: right; font-size: 1.05rem;">TOTAL HT</td>
-                            <td style="text-align: right; font-size: 1.05rem;">2 300,00 €</td>
-                        </tr>
-                        <tr>
-                            <td colspan="2" style="text-align: right;">Remise partenaire (15%)</td>
-                            <td style="text-align: right; color: #2e7d32;">- 345,00 €</td>
-                        </tr>
-                        <tr style="height: 0.5rem;">
-                            <td colspan="3" style="border-bottom: 2px solid #1a1a1a;"></td>
-                        </tr>
-                        <tr class="final-row">
-                            <td colspan="2" style="text-align: right; font-size: 1.25rem; letter-spacing: 0.05em;">TOTAL NET HT</td>
-                            <td style="text-align: right; font-size: 1.4rem; white-space: nowrap;">1 955,00 €</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
     </div>
 
-    <div class="navigation">
-        <button class="nav-btn" onclick="prevSlide()">←</button>
-        <div class="nav-dot active" onclick="goToSlide(0)"></div>
-        <div class="nav-dot" onclick="goToSlide(1)"></div>
-        <div class="nav-dot" onclick="goToSlide(2)"></div>
-        <div class="nav-dot" onclick="goToSlide(3)"></div>
-        <div class="nav-dot" onclick="goToSlide(4)"></div>
-        <div class="nav-dot" onclick="goToSlide(5)"></div>
-        <div class="nav-dot" onclick="goToSlide(6)"></div>
-        <button class="nav-btn" onclick="nextSlide()">→</button>
+    <!-- Nav -->
+    <div class="nav">
+        <button class="nav-btn" onclick="go(-1)" aria-label="Precedent">&#8592;</button>
+        <div class="dots" id="dots"></div>
+        <button class="nav-btn" onclick="go(1)" aria-label="Suivant">&#8594;</button>
     </div>
-
-    <div class="slide-counter">
-        <span id="current">01</span> / <span id="total">07</span>
-    </div>
+    <div class="counter"><span class="c" id="cur">01</span> / <span id="tot">06</span></div>
 
     <script>
-        let currentSlide = 0;
-        const slides = document.querySelectorAll('.slide');
-        const dots = document.querySelectorAll('.nav-dot');
-        const totalSlides = slides.length;
+        const slides=document.querySelectorAll('.slide'),N=slides.length;
+        let i=0;
 
-        function updateSlide() {
-            slides.forEach((slide, index) => {
-                slide.classList.remove('active');
-                if (index === currentSlide) {
-                    slide.classList.add('active');
-                }
-            });
-
-            dots.forEach((dot, index) => {
-                dot.classList.remove('active');
-                if (index === currentSlide) {
-                    dot.classList.add('active');
-                }
-            });
-
-            document.getElementById('current').textContent = 
-                String(currentSlide + 1).padStart(2, '0');
-            document.getElementById('total').textContent = 
-                String(totalSlides).padStart(2, '0');
+        const dotsEl=document.getElementById('dots');
+        for(let d=0;d<N;d++){
+            const dot=document.createElement('div');
+            dot.className='dot'+(d===0?' on':'');
+            dot.onclick=()=>jump(d);
+            dotsEl.appendChild(dot);
         }
 
-        function nextSlide() {
-            currentSlide = (currentSlide + 1) % totalSlides;
-            updateSlide();
+        function update(){
+            slides.forEach((s,idx)=>s.classList.toggle('active',idx===i));
+            document.querySelectorAll('.dot').forEach((d,idx)=>d.classList.toggle('on',idx===i));
+            document.getElementById('cur').textContent=String(i+1).padStart(2,'0');
+            document.getElementById('progress').style.width=((i+1)/N*100)+'%';
         }
 
-        function prevSlide() {
-            currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
-            updateSlide();
-        }
+        function go(dir){i=(i+dir+N)%N;update()}
+        function jump(idx){i=idx;update()}
 
-        function goToSlide(index) {
-            currentSlide = index;
-            updateSlide();
-        }
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowRight' || e.key === ' ') {
-                e.preventDefault();
-                nextSlide();
-            } else if (e.key === 'ArrowLeft') {
-                e.preventDefault();
-                prevSlide();
-            } else if (e.key >= '1' && e.key <= '7') {
-                goToSlide(parseInt(e.key) - 1);
-            }
+        document.addEventListener('keydown',e=>{
+            if(e.key==='ArrowRight'||e.key===' '){e.preventDefault();go(1)}
+            else if(e.key==='ArrowLeft'){e.preventDefault();go(-1)}
+            else if(e.key==='Escape'){jump(0)}
+            else if(+e.key>=1&&+e.key<=N){jump(+e.key-1)}
         });
 
-        // Touch swipe support for mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-
-        document.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
+        let tx=0;
+        document.addEventListener('touchstart',e=>{tx=e.changedTouches[0].screenX},{passive:true});
+        document.addEventListener('touchend',e=>{
+            const dx=e.changedTouches[0].screenX-tx;
+            if(dx<-50)go(1);else if(dx>50)go(-1);
         });
-
-        document.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            if (touchEndX < touchStartX - 50) {
-                nextSlide();
-            }
-            if (touchEndX > touchStartX + 50) {
-                prevSlide();
-            }
-        }
     </script>
 </body>
 </html>
