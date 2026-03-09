@@ -211,29 +211,45 @@
         @media(max-width:900px){.slide{padding:4rem 3rem 5.5rem}.brand{top:1.5rem;right:2rem}}
 
         @media(max-width:680px){
-            .slide{padding:3.5rem 2rem 5rem;align-items:flex-start}
+            .slide{padding:2.5rem 1.5rem 4rem;align-items:flex-start;overflow-y:auto}
             .brand{top:1.25rem;right:1.5rem;font-size:.6rem}
-            .metrics{gap:.75rem}
+            .heading{font-size:1.5rem;margin-bottom:.75rem}
+            .tag{margin-bottom:.5rem}
+            .desc{font-size:.85rem}
+            .metrics{gap:.75rem;margin-top:1.5rem}
             .mc{padding:1.25rem 1rem}
             .mc-n{font-size:2rem}
             .mc-l{font-size:.6rem}
-            .nav{bottom:1.25rem}
-            .counter{bottom:1.5rem;right:1.5rem}
+            .m-total{margin-top:1rem}
+            .nav{bottom:1rem}
+            .counter{bottom:1.25rem;right:1.5rem}
+            .tbl{margin-top:1.25rem}
             .tbl th,.tbl td{padding:.7rem 1rem;font-size:.78rem}
             .ir{padding:.9rem 1.25rem}
+            .ic{margin-top:1.25rem}
+            .recap{margin-top:1.25rem;gap:.75rem}
+            .recap-item{padding:1.25rem}
+            .recap-total{padding:1.25rem}
         }
 
         @media(max-width:440px){
-            .slide{padding:3rem 1.5rem 4.5rem}
-            .metrics{grid-template-columns:1fr;gap:.6rem}
-            .mc{display:flex;align-items:center;gap:1.25rem;text-align:left;padding:.9rem 1.25rem}
+            .slide{padding:2rem 1.25rem 3.5rem}
+            .heading{font-size:1.3rem;margin-bottom:.5rem}
+            .metrics{grid-template-columns:1fr;gap:.5rem;margin-top:1rem}
+            .mc{display:flex;align-items:center;gap:1.25rem;text-align:left;padding:.75rem 1rem}
             .mc-n{font-size:1.75rem;min-width:2.5rem;margin-bottom:0}
-            .m-total{flex-direction:column;gap:.25rem;align-items:flex-start}
+            .m-total{flex-direction:column;gap:.25rem;align-items:flex-start;margin-top:.75rem;padding:.75rem 1rem}
             .brand,.counter{display:none}
             .title-main{font-size:2.5rem}
-            .ir{flex-direction:column;align-items:flex-start;gap:.2rem}
+            .ir{flex-direction:column;align-items:flex-start;gap:.2rem;padding:.75rem 1rem}
+            .tbl{margin-top:1rem}
             .tbl th,.tbl td{padding:.6rem .75rem;font-size:.72rem}
             .tbl .rf td{font-size:.9rem}
+            .recap{margin-top:1rem;gap:.5rem}
+            .recap-item{padding:1rem}
+            .recap-sub{margin-bottom:.75rem}
+            .recap-total{padding:1rem}
+            .recap-total-amt{font-size:1.3rem}
         }
     </style>
 </head>
